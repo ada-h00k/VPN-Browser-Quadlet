@@ -1,0 +1,28 @@
+# Copyright (C) 2026 vpn-browser-quadlet contributors
+# SPDX-License-Identifier: AGPL-3.0-only
+# Reference unit. install.sh writes absolute paths for the current user.
+[Unit]
+Description=Gluetun VPN tunnel (Mullvad WireGuard)
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Container]
+Image=docker.io/qmcgaw/gluetun:latest
+ContainerName=gluetun
+AddCapability=NET_ADMIN
+AddDevice=/dev/net/tun:/dev/net/tun
+EnvironmentFile=./gluetun.env
+Volume=gluetun-data.volume:/gluetun
+PublishPort=127.0.0.1:3001:3001/tcp
+HealthCmd=/gluetun-entrypoint healthcheck
+HealthInterval=10s
+HealthTimeout=5s
+HealthStartPeriod=60s
+HealthRetries=6
+Notify=healthy
+HealthOnFailure=kill
+
+[Service]
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=300

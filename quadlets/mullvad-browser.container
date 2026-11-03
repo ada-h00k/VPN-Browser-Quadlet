@@ -1,0 +1,19 @@
+# Copyright (C) 2026 vpn-browser-quadlet contributors
+# SPDX-License-Identifier: AGPL-3.0-only
+# Reference unit. install.sh writes absolute paths for the current user.
+[Unit]
+Description=LinuxServer Mullvad Browser routed through Gluetun
+PartOf=gluetun.service
+
+[Container]
+Image=lscr.io/linuxserver/mullvad-browser:latest
+ContainerName=mullvad-browser
+Network=gluetun.container
+EnvironmentFile=./mullvad-browser.env
+Volume=browser-profile.volume:/config
+ShmSize=1g
+
+[Service]
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=300

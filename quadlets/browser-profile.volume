@@ -1,0 +1,4 @@
+# Copyright (C) 2026 vpn-browser-quadlet contributors
+# SPDX-License-Identifier: AGPL-3.0-only
+[Volume]
+VolumeName=vpn-browser-profile
